@@ -1,0 +1,48 @@
+<H1>Employee</H1>
+
+<div class="container">
+  <div class="alert alert-warning" *ngIf="employeeForm.dirty && employeeForm.invalid">Enter valid values</div>
+  <div class="alert alert-warning" *ngIf="employeeForm.dirty && dateOfBirth.invalid">Enter valid Target Date</div>
+  <div class="alert alert-warning" *ngIf="employeeForm.dirty && firstName.invalid">Enter atleast 3 characters in First Name</div>
+  <div class="alert alert-warning" *ngIf="employeeForm.dirty && lastName.invalid">Enter atleast 3 characters in last Name</div>
+  <div class="alert alert-warning" *ngIf="employeeForm.dirty && department.invalid">Enter atleast 3 characters in Department</div>
+  
+  <form (ngSubmit)="!employeeForm.invalid && saveEmployee()" #employeeForm="ngForm">
+    <fieldset class="form-group">
+      <label>First Name</label>
+      <input type="text" #firstName="ngModel" 
+            [(ngModel)]="employee.firstName" class="form-control" 
+                name="firstName" required="required" minlength="3">
+    </fieldset>
+    <fieldset class="form-group">
+        <label>Last Name</label>
+        <input type="text" #lasttName="ngModel" 
+              [(ngModel)]="employee.lastName" class="form-control" 
+                  name="lastName" required="required" minlength="3">
+      </fieldset>
+      <fieldset>
+      <label>Gender</label>
+      <select class="custom-select" (change)="changeGender()" formControlName="genderName">
+            <option value="" disabled>Choose your gender</option>
+            <option *ngFor="let gender of Gender" [ngValue]="gender">{{gender}}</option>
+         </select>
+       </fieldset>
+       
+      <!-- Gender male fieldset --> 
+    <fieldset class="form-group">
+        <label>Date of Birth</label>
+        <input type="date" #dateOfBirth="ngModel"
+        [ngModel]="employee.dateOfBirth | date:'yyyy-MM-dd' "
+        (ngModelChange)="employee.dateOfBirth = $event"
+        class="form-control" name="dateOfBirth" required="required" >
+    </fieldset>
+
+    <fieldset class="form-group">
+        <label>Department</label>
+        <input type="text" #department="ngModel" 
+              [(ngModel)]="employee.department" class="form-control" 
+                  name="department" required="required" minlength="3">
+      </fieldset>
+   <button type="submit" (click)="newEmployee()" class="btn btn-success">Save</button>
+  </form>  
+</div>
